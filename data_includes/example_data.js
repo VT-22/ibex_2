@@ -13,25 +13,18 @@ var defaults = [
    "Message", {
        transfer: "keypress"
       },
-  "AcceptabilityJudgment", {
-        as: ["1", "2", "3", "4", "5", "6", "7"],
-        presentAsScale: true,
-        instructions: "Zum Antworten Zahl drücken oder anklicken.",
-        leftComment: "(Gar nicht angemessen)", rightComment: "(Angemessen)"
-    },
-
-    //"DynamicQuestion", {
-      //  answers: {
-            // The labels are defined in global_z.css
-        //    CompUnnatural: ["1", "1"],
-          //  Unnatural: ["2", "2"],
-        //    NotNatural: ["3", "3"],
-        //    Average: ["4", "4"],
-        //    Natural: ["5", "5"],
-        //    QuiteNatural: ["6", "6"],
-        //    CompNatural: ["7", "7"]
-        }
-    }
+      "DynamicQuestion", {
+          answers: {
+              // The labels are defined in global_z.css
+              CompUnnatural: ["1", "1"],
+              Unnatural: ["2", "2"],
+              NotNatural: ["3", "3"],
+              Average: ["4", "4"],
+              Natural: ["5", "5"],
+              QuiteNatural: ["6", "6"],
+              CompNatural: ["7", "7"]
+          }
+      }
 
 ];
 
@@ -80,7 +73,7 @@ var items = [
 
     ["consent", "Form", {html: {include: "consentForm.html"}, continueOnReturn:true} ],
 
-["intro", "Form", {html: {include: "example_intro.html"}}],
+    ["intro", "Form", {html: {include: "example_intro.html"}}],
 
     // This checks that the resources have been preloaded
     ["preload", "ZipPreloader", {}],
@@ -101,10 +94,11 @@ var items = [
           "DynamicQuestion",
           {
               // We store the values of these cells in the results file
-              legend: function(x){ return [x.item,x.expt,x.condition,x.group,x.sentence].join("+"); },
+              legend: function(x){
+                return [x.item,x.expt,x.condition,x.group,x.sentence].join("+"); },
               // Generate each picture and return them as answers
-              answers: {Validate: ["F", "Drücken Sie F, um dem Satz zuzustimmen."], Reject: ["J", "Drücken Sie J, um den Satz abzulehnen."]},
-             enabled: false,                             // The user won't validate the trial by clicking/pressing the key.
+             //enabled: false,                             // The user won't validate the trial by clicking/pressing the key.
+
              sequence: function(x){
                     return [
 					                      // DEBUG INFORMATION
@@ -117,52 +111,17 @@ var items = [
                       function(t){ t.enabled = true; },
                       // Play audio file
                       {audio: x.Sound_filename, type: "audio/wav", waitFor: true, newRT: true},
-					   {this: "answers", showKeys: "bottom", waitFor: true}
-                    ];
+
+                    ]
+                    "the answer to this question is...",
+                    {this: "answers"}
+                    ;
                   }
                 }
 
       ],
 
       //new
-
-    ].concat(GetItemsFrom(data, null, {
-      ItemGroup: ["item", "group"],
-      Elements: [
-          // Label each item with the value in 'expt'
-          function(x){return x.expt;},
-          // Each item generated from the table is a DynamicQuestion trial
-          "DynamicQuestion",
-          {
-              // We store the values of these cells in the results file
-              legend: function(x){ return [x.item,x.expt,x.condition,x.group,x.sentence].join("+"); },
-              // Generate each picture and return them as answers
-              answers: {"image",  "AcceptabilityJudgment",
-            {s:"From a scale of 1 to 9, how has your morning been?",
-                                               as:["1","2","3","4","5","6","7","8","9"],
-                                                leftComment: "(Bad)",
-                                                rightComment: "(Good)"}],
-             enabled: false,                             // The user won't validate the trial by clicking/pressing the key.
-             sequence: function(x){
-                    return [
-					                      // DEBUG INFORMATION
-                     // "<p style='font-size: small;'>Condition: "+x.condition+"; Item: "+x.item+"; Group: "+x.group+"</p>",
-					getPicture(x.PicFilename),
-
-                      // Wait 1sec
-                      {pause: 1000},
-                      // Enable clicks
-                      function(t){ t.enabled = true; },
-                      // Play audio file
-                      {audio: x.Sound_filename, type: "audio/wav", waitFor: true, newRT: true},
-					   {this: "answers", showKeys: "bottom", waitFor: true}
-                    ];
-                  }
-                }
-
-      ],
-
-
 
       }
 
