@@ -10,33 +10,14 @@ var manualSendResults = true;
 
 // Some default settings of the parameters
 var defaults = [
-   "Message", {
-       transfer: "keypress"
-      },
-      "DynamicQuestion", {
-          answers: {
-              // The labels are defined in global_z.css
-              ["1", "1"],
-              ["2", "2"],
-              ["3", "3"],
-              ["4", "4"],
-              ["5", "5"],
-              ["6", "6"],
-              ["7", "7"]
-          }
-      }
-
-];
-
-//var defaults = [
-//    "Message",
-//    {
-//        transfer: "keypress"
-//    },
-//    "DynamicQuestion",
-//	{
-//        clickableAnswers: false    // Prevents participants from choosing an answer by clicking on it
-//    },
+    "Message",
+    {
+        transfer: "keypress"
+    },
+    "DynamicQuestion", 
+	{
+        clickableAnswers: false    // Prevents participants from choosing an answer by clicking on it
+    },
 ];
 
 // Indicate where to find the ZIP files containing the images and the audio samples
@@ -57,29 +38,29 @@ var items = [
 
     // Warn participants audio is requried, give them the opportunity to adjust their volume
     ["audio", "Message", {html: {include: "audio.html"}, transfer: "click"}],
-
+    
     // Increment the counter (set in shuffleSequence when it should happen)
     ["counter", "__SetCounter__", {}],
 
     // Send the results to the server (set in shuffleSequence when it should happen))
     ["results", "__SendResults__", {}],
-
+	
 	 ["comments", "Form",  {html: {include: "ProlificFeedbackPreConfirmation.html"}}],
-
+    
     ["debriefing", "Message", {html: {include: "Debriefing.html"}}],
-
+    
     // Two-screen item: task-oriented instructions on the first screen, mouse instructions on the second screen
-    ["instructions", "Message", {html: {include: "instructions.html"}}],
+    ["instructions", "Message", {html: {include: "instructions.html"}}],  
+	
+    ["consent", "Form", {html: {include: "consentForm.html"}, continueOnReturn:true} ], 
 
-    ["consent", "Form", {html: {include: "consentForm.html"}, continueOnReturn:true} ],
-
-    ["intro", "Form", {html: {include: "example_intro.html"}}],
+["intro", "Form", {html: {include: "example_intro.html"}}],    
 
     // This checks that the resources have been preloaded
     ["preload", "ZipPreloader", {}],
-
+      
     ["sepPractice", "Separator", {normalMessage: "Sehr gut, lassen Sie uns mit einem weiteren Übungsdurchgang fortfahren. Drücken Sie eine beliebige Taste."}],
-
+      
     ["preExp", "Message", {html: "<div style='text-align: center;'><p>Danke! Vergessen Sie im Folgenden nicht, "+
                                  "die Sätze und Situationen ausreichend zu erwägen,<br />"+
                                  "sodass Sie ein informierte Entscheidung treffen können.</p>"+
@@ -94,11 +75,10 @@ var items = [
           "DynamicQuestion",
           {
               // We store the values of these cells in the results file
-              legend: function(x){
-                return [x.item,x.expt,x.condition,x.group,x.sentence].join("+"); },
+              legend: function(x){ return [x.item,x.expt,x.condition,x.group,x.sentence].join("+"); },
               // Generate each picture and return them as answers
-             //enabled: false,                             // The user won't validate the trial by clicking/pressing the key.
-
+              answers: {Validate: ["F", "Drücken Sie F, um dem Satz zuzustimmen."], Reject: ["J", "Drücken Sie J, um den Satz abzulehnen."]},
+             enabled: false,                             // The user won't validate the trial by clicking/pressing the key.
              sequence: function(x){
                     return [
 					                      // DEBUG INFORMATION
@@ -111,21 +91,10 @@ var items = [
                       function(t){ t.enabled = true; },
                       // Play audio file
                       {audio: x.Sound_filename, type: "audio/wav", waitFor: true, newRT: true},
-
-                    ]
-                    "the answer to this question is...",
-                    {this: "answers"}
-                    ;
+					   {this: "answers", showKeys: "bottom", waitFor: true}
+                    ];
                   }
                 }
-
+          
       ],
-
-      //new
-
-      }
-
-
   }));
-
-  ["story",

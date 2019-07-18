@@ -1,14 +1,27 @@
-#CompUnnatural:before {
-  content: "Completely unnatural";
-  padding-right: 1em;
+.tooltip {
+    padding: 10px;
+    max-width: 300px;
+    opacity: 0.95;
+    background: #CCCC99;
+    border-radius: 5px;
+    font-weight: bold;
+    /*opacity: 0.25; */
 }
 
-#CompNatural:after {
-  content: " Completely natural";
-  padding-left: 1em;
+.tooltip:hover {
+    /*opacity: 0.95;*/
 }
 
-p {
-  max-width: 50em;
-  margin: auto;
+.tooltip-validation {
+    border: solid 1px black;
+    padding: 0px 2px;
+    margin-left: 2px;
+    border-radius: 2px;
+    cursor: auto;
+}
+
+.tooltip-validation:hover {
+    border: solid 1px white;
+    color: white;
+    cursor: default;
 }
