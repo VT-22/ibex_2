@@ -1,5 +1,7 @@
-p {
+.DynamicQuestion p {
   margin:5px;
+  font-size: 1.3em;
+  width: 30em;
 }
 
 .keyLabel {
@@ -16,12 +18,21 @@ p {
 
 .choice {
   font-size:120%;
-  border-spacing: 30px 0px;
+  border-spacing: 1em;
 }
 
-.scale-box {
+.pause {
+  text-align: center;
+  font-style: italic;
+  margin: auto;
+}
+
+.pause p {
+  margin-top: 1em;
+}
+
+li.scale-box {
   border: solid 2px black;
-  padding: 5px;
 }
 
 .contextPicture {
@@ -42,7 +53,7 @@ p {
 .deleteAfter {
   text-align:justify;
 }
-    
+
 .rawText, .waitFor, .legend {
   font-size:1.3em;
 }
@@ -75,7 +86,7 @@ li.scale-box {
 }
 
 li.scale-box a {
-    text-decoration: none; 
+    text-decoration: none;
     display: block;
     vertical-align: middle;
 }
