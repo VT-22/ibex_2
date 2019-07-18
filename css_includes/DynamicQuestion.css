@@ -1,5 +1,19 @@
-p {
+.DynamicQuestion p {
   margin:5px;
+}
+
+.pause {
+  text-align: center;
+  font-style: italic;
+  margin: auto;
+}
+
+.pause p {
+  margin-top: 1em;
+}
+
+li.scale-box {
+  border: solid 2px black;
 }
 
 .keyLabel {
